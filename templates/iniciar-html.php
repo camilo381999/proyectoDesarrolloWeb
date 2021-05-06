@@ -5,13 +5,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tecniclick</title>
-    <link rel="shortcut icon" href="img/icono-tab.png" />
+    <title>Mapa de bogota</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/estilos.css">
-    <link rel="stylesheet" href="plugins/SweetAlert/dist/sweetalert2.min.css">
-    
-    <script src="plugins/SweetAlert/dist/sweetalert2.all.min.js"></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css' rel='stylesheet' />
 
 </head>
 
