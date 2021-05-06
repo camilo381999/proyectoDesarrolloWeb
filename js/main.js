@@ -21,9 +21,9 @@ var municipios_data = {
     'Forma_20': 'Ciudad Bolivar'};
 
 var default_attributes = {
-    fill: '#28488C',
-    stroke: '#28488C',
-    'stroke-width': 1,
+    fill: '#06d6a0',
+    stroke: '#fff',
+    'stroke-width': 2,
 };
 
 var $munictxt = $('#municipiotxt');
@@ -42,7 +42,7 @@ $.ajax({
 
             munic.attr(default_attributes);
             munic.hover(function () {
-                this.animate({ fill: '#118AB2' });
+                this.animate({ fill: '#ffd166' });
                 var text = "Municipio: ";
                 if (typeof (municipios_data[pid]) != 'undefined')
                     text += municipios_data[pid];

@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="css/estilos.css">
     <script src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/raphael.min.js"> </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"></script>
 
 </head>
 
