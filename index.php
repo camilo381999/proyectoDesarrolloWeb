@@ -1,6 +1,18 @@
 <?php
 include_once('templates/iniciar-html.php');
-$localidad = $_GET['localidad'];
+
+
+$actual_link = "{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+//echo $actual_link;
+$porciones = explode("?", $actual_link);
+//echo count($porciones);
+$localidad ="";
+
+if (count($porciones)>1) {
+  $localidad = $_GET['localidad'];
+}
+
+
 ?>
 <h1>Estadísticas de hurto a personas en Bogotá 2021</h1>
 <div id="municipiotxt">Selecciona una localidad</div>
@@ -9,7 +21,7 @@ $localidad = $_GET['localidad'];
 <!-- <img src="img/mapa.svg"> -->
 <div class="grafica">
   <div class="chart-container" style="position: relative; height:600px; width:800px">
-  <?php echo '<h1>'.$localidad.'</h1>'; ?>
+    <?php echo '<h1>' . $localidad . '</h1>'; ?>
     <canvas id="myChart"></canvas>
   </div>
 </div>
@@ -24,38 +36,38 @@ $localidad = $_GET['localidad'];
     const ctx = document.getElementById('myChart').getContext('2d');
 
     const myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: ['Enero', 'Febrero', 'Marzo'],
-          datasets: [{
-            label: 'Hurtos Bogotá',
-            data: /* ylabels */ [500, 1000, 2000],
-            backgroundColor: [
-              '#ffd166'
-            ],
-            borderColor: [
-              '#fff'
-            ],
-            borderWidth: 1
+      type: 'bar',
+      data: {
+        labels: ['Enero', 'Febrero', 'Marzo'],
+        datasets: [{
+          label: 'Hurtos Bogotá',
+          data: /* ylabels */ [500, 1000, 2000],
+          backgroundColor: [
+            '#ffd166'
+          ],
+          borderColor: [
+            '#fff'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          xAxes: [{
+            gridLines: {
+              display: true,
+              color: "#FFF"
+            }
+          }],
+          yAxes: [{
+            gridLines: {
+              display: true,
+              color: "#FFF"
+            }
           }]
-        },
-        options: {
-          responsive: true,
-          scales: {
-            xAxes: [{
-              gridLines: {
-                display: true,
-                color: "#FFF"
-              }
-            }],
-            yAxes: [{
-              gridLines: {
-                display: true,
-                color: "#FFF"
-              }
-            }]
-          }
         }
+      }
     });
   }
 
