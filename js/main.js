@@ -43,20 +43,20 @@ $.ajax({
             munic.attr(default_attributes);
             munic.hover(function () {
                 this.animate({ fill: '#ffd166' });
-                var text = "Municipio: ";
-                if (typeof (municipios_data[pid]) != 'undefined')
+                var text = "Localidad: ";
+                if (typeof (municipios_data[pid]) != 'undefined'){
                     text += municipios_data[pid];
-                else
+                }else{
                     text += "Sin nombre";
-                text += "(" + $(this).attr('id') + ")";
+                }//text += "(" + $(this).attr('id') + ")";
 
                 $munictxt.html(text);
             }, function () {
                 this.animate({ fill: default_attributes.fill });
-                $munictxt.html("Selecciona un municipio");
+                $munictxt.html("Selecciona una localidad");
             }).click(function () {
-                console.log();
-                alert("Click sobre un municipio. ID = " + $(this).attr('id'));
+                console.log(municipios_data[pid]);
+                window.location.href = 'index.php?localidad='+municipios_data[pid];
             });
         });
         $('#loadingicon').hide();
