@@ -1,18 +1,84 @@
 <?php
 include_once('templates/iniciar-html.php');
-
+include_once('Datos.php');
 
 $actual_link = "{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
 //echo $actual_link;
 $porciones = explode("?", $actual_link);
 //echo count($porciones);
-$localidad ="";
+$localidad = "";
+$localidadDB = "";
+$datos = new Datos();
 
-if (count($porciones)>1) {
+if (count($porciones) > 1) {
   $localidad = $_GET['localidad'];
+
+  switch ($localidad) {
+    case 'Usaquen':
+      $localidadDB = '01 - USAQUÉN';
+      break;
+    case 'Chapinero':
+      $localidadDB = '02 - CHAPINERO';
+      break;
+    case 'Santafé':
+      $localidadDB = '03 - SANTA FE';
+      break;
+    case 'San Cristobal':
+      $localidadDB = '04 - SAN CRISTÓBAL';
+      break;
+    case 'Usme':
+      $localidadDB = '05 - USME';
+      break;
+    case 'Tunjuelito':
+      $localidadDB = '06 - TUNJUELITO';
+      break;
+    case 'Bosa':
+      $localidadDB = '07 - BOSA';
+      break;
+    case 'Kennedy':
+      $localidadDB = '08 - KENNEDY';
+      break;
+    case 'Fontibon':
+      $localidadDB = '09 - FONTIBÓN';
+      break;
+    case 'Engativa':
+      $localidadDB = '10 - ENGATIVÁ';
+      break;
+    case 'Suba':
+      $localidadDB = '11 - SUBA';
+      break;
+    case 'Barrios unidos':
+      $localidadDB = '12 - BARRIOS UNIDOS';
+      break;
+    case 'Teusaquillo':
+      $localidadDB = '13 - TEUSAQUILLO';
+      break;
+    case 'Martires':
+      $localidadDB = '14 - LOS MÁRTIRES';
+      break;
+    case 'Antonio Nariño':
+      $localidadDB = '15 - ANTONIO NARIÑO';
+      break;
+    case 'Puente aranda':
+      $localidadDB = '16 - PUENTE ARANDA';
+      break;
+    case 'La candelaria':
+      $localidadDB = '17 - CANDELARIA';
+      break;
+    case 'Rafael uribe':
+      $localidadDB = '18 - RAFAEL URIBE URIBE';
+      break;
+    case 'Ciudad Bolivar':
+      $localidadDB = '19 - CIUDAD BOLÍVAR';
+      break;
+    case 'Sumapaz':
+      $localidadDB = '99 - SIN LOCALIZACION';
+      break;
+  }
+  $hurtos = $datos->selectByLocalidad($localidadDB);
+}else{
+  $hurtos = $datos->selectAll();
 }
-
-
 ?>
 <h1>Estadísticas de hurto a personas en Bogotá 2021</h1>
 <div id="municipiotxt">Selecciona una localidad</div>
@@ -41,7 +107,7 @@ if (count($porciones)>1) {
         labels: ['Enero', 'Febrero', 'Marzo'],
         datasets: [{
           label: 'Hurtos Bogotá',
-          data: /* ylabels */ [500, 1000, 2000],
+          data: /* ylabels */ [<?php echo $hurtos[0]; ?>, <?php echo $hurtos[1]; ?>, <?php echo $hurtos[2]; ?>],
           backgroundColor: [
             '#ffd166'
           ],
