@@ -5,7 +5,7 @@
 		protected $db;
 		private $drive = "mysql";
 		private $host = "localhost";
-		private $dbname = "csv_db 13";
+		private $dbname = "basedatos_hurtobogota";
 		private $usuario = "root";
 		private $contrasena = "";
 

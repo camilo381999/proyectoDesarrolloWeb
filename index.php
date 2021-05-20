@@ -104,10 +104,10 @@ if (count($porciones) > 1) {
     const myChart = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: ['Enero', 'Febrero', 'Marzo'],
+        labels: ['Enero', 'Febrero', 'Marzo', 'Abril'],
         datasets: [{
           label: 'Hurtos Bogotá',
-          data: /* ylabels */ [<?php echo $hurtos[0]; ?>, <?php echo $hurtos[1]; ?>, <?php echo $hurtos[2]; ?>],
+          data: /* ylabels */ [<?php echo $hurtos[0]; ?>, <?php echo $hurtos[1]; ?>, <?php echo $hurtos[2]; ?>, <?php echo $hurtos[3]; ?>],
           backgroundColor: [
             '#ffd166'
           ],
