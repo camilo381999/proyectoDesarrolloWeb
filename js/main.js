@@ -1,64 +1,43 @@
-var municipios_data = {
-    'Forma_1': 'Usaquen',
-    'Forma_2': 'Suba',
-    'Forma_3': 'Engativa',
-    'Forma_4': 'Barrios unidos',
-    'Forma_5': 'Teusaquillo',
-    'Forma_6': 'Martires',
-    'Forma_7': 'Chapinero',
-    'Forma_8': 'Puente aranda',
-    'Forma_9': 'Fontibon',
-    'Forma_10': 'Kennedy',
-    'Forma_11': 'Santafé',
-    'Forma_12': 'La candelaria',
-    'Forma_13': 'Antonio Nariño',
-    'Forma_14': 'Rafael uribe',
-    'Forma_15': 'Tunjuelito',
-    'Forma_16': 'Bosa',
-    'Forma_17': 'San Cristobal',
-    'Forma_18': 'Sumapaz',
-    'Forma_19': 'Usme',
-    'Forma_20': 'Ciudad Bolivar'};
+mapboxgl.accessToken = '';
+var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/outdoors-v11',
+    center: [-74.12609490031389, 4.631174843212949],
+    zoom: 9.7
+});
 
-var default_attributes = {
-    fill: '#06d6a0',
-    stroke: '#fff',
-    'stroke-width': 2,
-};
+map.on('load', function () {
+    map.addSource('route', {
+        'type': 'geojson',
+        'data': 'map.geojson'
+    });
 
-var $munictxt = $('#municipiotxt');
+    map.addLayer({
+        'id': 'route',
+        'type': 'fill',
+        'source': 'route',
+        'paint': {
+            'fill-color': '#06d6a0',
+            'fill-outline-color': '#000',
+            'fill-opacity': 0.3
+        }
+    });
 
-$.ajax({
-    url: 'img/mapa.svg',
-    type: 'GET',
-    dataType: 'xml',
-    success: function (xml) {
-        var rjs = Raphael('lienzo', 906, 604);
-        var corr = "";
-        $(xml).find('svg > path').each(function () {
-            var path = $(this).attr('d');
-            var pid = $(this).attr('id');
-            var munic = rjs.path(path);
+    map.on('mouseenter', 'route', function () {
+        map.getCanvas().style.cursor = 'pointer';
+    });
 
-            munic.attr(default_attributes);
-            munic.hover(function () {
-                this.animate({ fill: '#ffd166' });
-                var text = "Localidad: ";
-                if (typeof (municipios_data[pid]) != 'undefined'){
-                    text += municipios_data[pid];
-                }else{
-                    text += "Sin nombre";
-                }//text += "(" + $(this).attr('id') + ")";
+    // Change it back to a pointer when it leaves.
+    map.on('mouseleave', 'route', function () {
+        map.getCanvas().style.cursor = '';
+    });
 
-                $munictxt.html(text);
-            }, function () {
-                this.animate({ fill: default_attributes.fill });
-                $munictxt.html("Selecciona una localidad");
-            }).click(function () {
-                console.log(municipios_data[pid]);
-                window.location.href = 'index.php?localidad='+municipios_data[pid];
-            });
-        });
-        $('#loadingicon').hide();
-    }
+    map.on('click', 'route', function (e) {
+        console.log(e.features[0].properties.name);
+        new mapboxgl.Popup()
+            .setLngLat(e.lngLat)
+            .setHTML(e.features[0].properties.name)
+            .addTo(map);
+        window.location.href = 'index.php?localidad=' + e.features[0].properties.name;
+    });
 });

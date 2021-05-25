@@ -76,13 +76,15 @@ if (count($porciones) > 1) {
       break;
   }
   $hurtos = $datos->selectByLocalidad($localidadDB);
-}else{
+} else {
   $hurtos = $datos->selectAll();
 }
 ?>
 <h1>Estadísticas de hurto a personas en Bogotá 2021</h1>
 <div id="municipiotxt">Selecciona una localidad</div>
-<div id="lienzo"></div>
+<div id="map">
+<script src="js/main.js"></script>
+</div>
 
 <!-- <img src="img/mapa.svg"> -->
 <div class="grafica">
@@ -103,6 +105,33 @@ if (count($porciones) > 1) {
 
     const myChart = new Chart(ctx, {
       type: 'bar',
+      options: {
+        plugins: {
+          /*title: {
+            display: true,
+            text: 'Custom Chart Title',
+            color: '#fff'
+          },
+          legend: {
+            display: true,
+            labels: {
+              color: '#fff'
+            }
+          }*/
+        },
+        scales: {
+          xAxes: [{
+            gridLines: {
+              color: "rgba(0, 0, 0, 0)",
+            }
+          }],
+          yAxes: [{
+            gridLines: {
+              color: "rgba(0, 0, 0, 0)",
+            }
+          }]
+        }
+      },
       data: {
         labels: ['Enero', 'Febrero', 'Marzo', 'Abril'],
         datasets: [{
@@ -116,47 +145,10 @@ if (count($porciones) > 1) {
           ],
           borderWidth: 1
         }]
-      },
-      options: {
-        responsive: true,
-        scales: {
-          xAxes: [{
-            gridLines: {
-              display: true,
-              color: "#FFF"
-            }
-          }],
-          yAxes: [{
-            gridLines: {
-              display: true,
-              color: "#FFF"
-            }
-          }]
-        }
       }
+      
     });
   }
-
-  /* async function getData() {
-      const response = await fetch('exportar.csv');
-      const data = await response.text();
-      //let aux = 1;
-      for (let index = 1; index < 7; index++) {
-          let contador = 0;
-          const table = data.split('\n').slice(1);
-          table.forEach(row => {
-              const columns = row.split(';');
-              const producto = columns[3];
-              const temp = columns[2];
-
-              if (index == temp) {
-                  contador++;
-              } 
-          });
-          ylabels.push(contador);
-      }
-      console.log(ylabels);
-  } */
 </script>
 
 
