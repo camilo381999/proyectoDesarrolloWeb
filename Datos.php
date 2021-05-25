@@ -8,7 +8,8 @@ class Datos extends Conexion
 	function __construct() {
 		$this->db = parent::__construct();
 	}
-//datos_hurto_personas
+
+	//datos_hurto_personas en general
 	public function selectAll()	{
 		$statement = $this->db->prepare("SELECT (SELECT COUNT(Delito) FROM `datos_hurto_personas` WHERE Mes='ENE') AS 'ENERO',(SELECT COUNT(Delito) FROM `datos_hurto_personas` WHERE Mes='FEB') AS 'FEBRERO',(SELECT COUNT(Delito) FROM `datos_hurto_personas` WHERE Mes='MAR') AS 'MARZO', (SELECT COUNT(Delito) FROM `datos_hurto_personas` WHERE Mes='ABR') AS 'ABRIL' FROM datos_hurto_personas");
 		$statement->execute();
@@ -17,11 +18,42 @@ class Datos extends Conexion
 		return $result;
 	}
 
+	public function selectModalidad()	{
+		$statement = $this->db->prepare("SELECT Modalidad, COUNT(Mes) AS Contado FROM `datos_hurto_personas` GROUP BY `Modalidad` ORDER BY `Contado` DESC LIMIT 3");
+		$statement->execute();
+		$result = $statement->fetchAll();
+		return $result;
+	}
+
+	public function selectMomento()	{
+		$statement = $this->db->prepare("SELECT `Rango del Dia`, COUNT(Mes) AS Contado FROM `datos_hurto_personas` GROUP BY `Rango del Dia` ORDER BY `Contado` DESC LIMIT 1");
+		$statement->execute();
+		$result = $statement->fetch();
+		return $result;
+	}
+
+	//datos_hurto_personas por localidad
     public function selectByLocalidad($localidadDB)	{
 		$statement = $this->db->prepare("SELECT (SELECT COUNT(Delito) FROM `datos_hurto_personas` WHERE Localidad=:localidadDB AND Mes='ENE') AS 'ENERO',(SELECT COUNT(Delito) FROM `datos_hurto_personas` WHERE Localidad=:localidadDB AND Mes='FEB') AS 'FEBRERO',(SELECT COUNT(Delito) FROM `datos_hurto_personas` WHERE Localidad=:localidadDB AND Mes='MAR') AS 'MARZO',(SELECT COUNT(Delito) FROM `datos_hurto_personas` WHERE Localidad=:localidadDB AND Mes='ABR') AS 'ABRIL' FROM datos_hurto_personas");
 		
         $statement->bindParam(':localidadDB', $localidadDB);
         $statement->execute();
+		$result = $statement->fetch();
+		return $result;
+	}
+
+	public function selectModalidadByLocalidad($localidadDB)	{
+		$statement = $this->db->prepare("SELECT Modalidad, COUNT(Mes) AS Contado FROM `datos_hurto_personas` WHERE Localidad=:localidadDB GROUP BY `Modalidad` ORDER BY `Contado` DESC LIMIT 3");
+		$statement->bindParam(':localidadDB', $localidadDB);
+		$statement->execute();
+		$result = $statement->fetchAll();
+		return $result;
+	}
+
+	public function selectMomentoByLocalidad($localidadDB) {
+		$statement = $this->db->prepare("SELECT `Rango del Dia`, COUNT(Mes) AS Contado FROM `datos_hurto_personas` WHERE Localidad=:localidadDB GROUP BY `Rango del Dia` ORDER BY `Contado` DESC LIMIT 1");
+		$statement->bindParam(':localidadDB', $localidadDB);
+		$statement->execute();
 		$result = $statement->fetch();
 		return $result;
 	}

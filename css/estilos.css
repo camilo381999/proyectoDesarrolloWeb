@@ -31,6 +31,11 @@ h1{
   font-size: 40px;
 }
 
+h3{
+  text-align: center;
+  color: #fff;
+}
+
 #municipiotxt{
   color: #fff;
   font-size: 20px;

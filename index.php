@@ -76,23 +76,68 @@ if (count($porciones) > 1) {
       break;
   }
   $hurtos = $datos->selectByLocalidad($localidadDB);
+  $modalidad = $datos->selectModalidadByLocalidad($localidadDB);
+  $momento = $datos->selectMomentoByLocalidad($localidadDB);
 } else {
+  $localidad = "Bogotá";
   $hurtos = $datos->selectAll();
+  $modalidad = $datos->selectModalidad();
+  $momento = $datos->selectMomento();
 }
 ?>
 <h1>Estadísticas de hurto a personas en Bogotá 2021</h1>
-<div id="municipiotxt">Selecciona una localidad</div>
-<div id="map">
-<script src="js/main.js"></script>
+
+<div class="container">
+  <div class="row">
+    <!-- mapa -->
+    <div class="col-md-5 col-sm-12 col-xs-12">
+      <div id="municipiotxt">Selecciona una localidad</div>
+      <div class="center-block">
+        <div id="map">
+          <script src="js/main.js"></script>
+        </div>
+      </div>
+    </div>
+
+    <!-- Otros datos de analisis -->
+    <div class="col-md-7 col-sm-12 col-xs-12">
+      <?php echo '<h3>' . $localidad . '</h3>'; ?><br>
+      <div class="card" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">Modalidad de hurto</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Las 3 modalidades mas comunes de hurto en <?php echo $localidad; ?> son: </h6>
+          <p class="card-text">1. <?php echo $modalidad[0][0]; ?></p>
+          <p class="card-text">2. <?php echo $modalidad[1][0]; ?></p>
+          <p class="card-text">3. <?php echo $modalidad[2][0]; ?></p>
+        </div>
+      </div>
+<br>
+      <div class="card" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">Momento del día</h5>
+          <h6 class="card-subtitle mb-2 text-muted">El momento del día en que mas hurtos se presentan en <?php echo $localidad; ?> es en la: </h6>
+          <p class="card-text"><?php echo $momento[0]; ?></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grafica de barras -->
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="grafica">
+        <div class="chart-container" style="position: relative; height:600px; width:800px">
+          <canvas id="myChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
 </div>
 
-<!-- <img src="img/mapa.svg"> -->
-<div class="grafica">
-  <div class="chart-container" style="position: relative; height:600px; width:800px">
-    <?php echo '<h1>' . $localidad . '</h1>'; ?>
-    <canvas id="myChart"></canvas>
-  </div>
-</div>
+
 
 
 
@@ -146,7 +191,7 @@ if (count($porciones) > 1) {
           borderWidth: 1
         }]
       }
-      
+
     });
   }
 </script>

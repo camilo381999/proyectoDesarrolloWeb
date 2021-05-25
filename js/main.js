@@ -2,7 +2,8 @@ mapboxgl.accessToken = '';
 var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/outdoors-v11',
-    center: [-74.12609490031389, 4.631174843212949],
+    //center: [-74.12609490031389, 4.631174843212949],
+    center: [-74.097519, 4.650337],
     zoom: 9.7
 });
 
@@ -20,6 +21,16 @@ map.on('load', function () {
             'fill-color': '#06d6a0',
             'fill-outline-color': '#000',
             'fill-opacity': 0.3
+        }
+    });
+
+    map.addLayer({
+        'id': 'delineado',
+        'type': 'line',
+        'source': 'route',
+        'paint': {
+            'line-color': '#555555',
+            'line-width': 2
         }
     });
 
