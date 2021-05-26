@@ -85,12 +85,12 @@ if (count($porciones) > 1) {
   $momento = $datos->selectMomento();
 }
 ?>
-<h1>Estadísticas de hurto a personas en Bogotá 2021</h1>
+<h1>Estadísticas de hurto a personas en Bogotá 2021</h1><br>
 
 <div class="container">
   <div class="row">
     <!-- mapa -->
-    <div class="col-md-5 col-sm-12 col-xs-12">
+    <div class="col-md-6 col-sm-12 col-xs-12">
       <div id="municipiotxt">Selecciona una localidad</div>
       <div class="center-block">
         <div id="map">
@@ -100,29 +100,32 @@ if (count($porciones) > 1) {
     </div>
 
     <!-- Otros datos de analisis -->
-    <div class="col-md-7 col-sm-12 col-xs-12">
+    <div class="col-md-6 col-sm-12 col-xs-12">
       <?php echo '<h3>' . $localidad . '</h3>'; ?><br>
-      <div class="card" style="width: 18rem;">
+      <div class="card">
         <div class="card-body">
           <h5 class="card-title">Modalidad de hurto</h5>
-          <h6 class="card-subtitle mb-2 text-muted">Las 3 modalidades mas comunes de hurto en <?php echo $localidad; ?> son: </h6>
+          <h6 class="card-subtitle mb-2 text-muted">Las 3 modalidades más comunes de hurto en <?php echo $localidad; ?> son: </h6>
           <p class="card-text">1. <?php echo $modalidad[0][0]; ?></p>
           <p class="card-text">2. <?php echo $modalidad[1][0]; ?></p>
           <p class="card-text">3. <?php echo $modalidad[2][0]; ?></p>
         </div>
       </div>
-<br>
-      <div class="card" style="width: 18rem;">
+
+      <br>
+
+      <div class="card">
         <div class="card-body">
           <h5 class="card-title">Momento del día</h5>
-          <h6 class="card-subtitle mb-2 text-muted">El momento del día en que mas hurtos se presentan en <?php echo $localidad; ?> es en la: </h6>
+          <h6 class="card-subtitle mb-2 text-muted">El momento del día en que más hurtos se presentan en <?php echo $localidad; ?> es en la: </h6>
           <p class="card-text"><?php echo $momento[0]; ?></p>
         </div>
       </div>
     </div>
 
+
     <!-- Grafica de barras -->
-    <div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="col-md-12 col-sm-12 col-xs-12"><br><br>
       <div class="grafica">
         <div class="chart-container" style="position: relative; height:600px; width:800px">
           <canvas id="myChart"></canvas>
@@ -131,15 +134,7 @@ if (count($porciones) > 1) {
     </div>
   </div>
 
-
-
-
-
 </div>
-
-
-
-
 
 <script>
   const ylabels = [];
