@@ -19,16 +19,23 @@ class Datos extends Conexion
 	}
 
 	public function selectModalidad()	{
-		$statement = $this->db->prepare("SELECT Modalidad, COUNT(Mes) AS Contado FROM `datos_hurto_personas` GROUP BY `Modalidad` ORDER BY `Contado` DESC LIMIT 3");
+		$statement = $this->db->prepare("SELECT Modalidad, COUNT(Mes) AS Contado FROM `datos_hurto_personas` GROUP BY `Modalidad` ORDER BY `Contado` DESC");
 		$statement->execute();
 		$result = $statement->fetchAll();
 		return $result;
 	}
 
 	public function selectMomento()	{
-		$statement = $this->db->prepare("SELECT `Rango del Dia`, COUNT(Mes) AS Contado FROM `datos_hurto_personas` GROUP BY `Rango del Dia` ORDER BY `Contado` DESC LIMIT 1");
+		$statement = $this->db->prepare("SELECT `Rango del Dia`, COUNT(Mes) AS Contado FROM `datos_hurto_personas` GROUP BY `Rango del Dia` ORDER BY `Contado` DESC");
 		$statement->execute();
-		$result = $statement->fetch();
+		$result = $statement->fetchAll();
+		return $result;
+	}
+
+	public function selectGenero()	{
+		$statement = $this->db->prepare("SELECT `Sexo`, COUNT(Mes) AS Contado FROM `datos_hurto_personas` GROUP BY `Sexo` ORDER BY `Contado` DESC LIMIT 2");
+		$statement->execute();
+		$result = $statement->fetchAll();
 		return $result;
 	}
 
@@ -43,7 +50,7 @@ class Datos extends Conexion
 	}
 
 	public function selectModalidadByLocalidad($localidadDB)	{
-		$statement = $this->db->prepare("SELECT Modalidad, COUNT(Mes) AS Contado FROM `datos_hurto_personas` WHERE Localidad=:localidadDB GROUP BY `Modalidad` ORDER BY `Contado` DESC LIMIT 3");
+		$statement = $this->db->prepare("SELECT Modalidad, COUNT(Mes) AS Contado FROM `datos_hurto_personas` WHERE Localidad=:localidadDB GROUP BY `Modalidad` ORDER BY `Contado` DESC");
 		$statement->bindParam(':localidadDB', $localidadDB);
 		$statement->execute();
 		$result = $statement->fetchAll();
@@ -51,10 +58,18 @@ class Datos extends Conexion
 	}
 
 	public function selectMomentoByLocalidad($localidadDB) {
-		$statement = $this->db->prepare("SELECT `Rango del Dia`, COUNT(Mes) AS Contado FROM `datos_hurto_personas` WHERE Localidad=:localidadDB GROUP BY `Rango del Dia` ORDER BY `Contado` DESC LIMIT 1");
+		$statement = $this->db->prepare("SELECT `Rango del Dia`, COUNT(Mes) AS Contado FROM `datos_hurto_personas` WHERE Localidad=:localidadDB GROUP BY `Rango del Dia` ORDER BY `Contado` DESC");
 		$statement->bindParam(':localidadDB', $localidadDB);
 		$statement->execute();
-		$result = $statement->fetch();
+		$result = $statement->fetchAll();
+		return $result;
+	}
+
+	public function selectGeneroByLocalidad($localidadDB)	{
+		$statement = $this->db->prepare("SELECT `Sexo`, COUNT(Mes) AS Contado FROM `datos_hurto_personas` WHERE Localidad=:localidadDB GROUP BY `Sexo` ORDER BY `Contado` DESC LIMIT 2");
+		$statement->bindParam(':localidadDB', $localidadDB);
+		$statement->execute();
+		$result = $statement->fetchAll();
 		return $result;
 	}
 

@@ -1,4 +1,4 @@
-mapboxgl.accessToken = '';
+mapboxgl.accessToken = 'pk.eyJ1IjoicHJveWVjdG9hcHBzd2ViMTIiLCJhIjoiY2tvYzN4YWJ0MGYwMzJ2dWh2Ymk5OW9neiJ9.-4p25j9qimxlym1l6S-ulg';
 var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/outdoors-v11',
@@ -6,6 +6,8 @@ var map = new mapboxgl.Map({
     center: [-74.097519, 4.650337],
     zoom: 9.7
 });
+
+var hoveredStateId = null;
 
 map.on('load', function () {
     map.addSource('route', {
@@ -17,11 +19,42 @@ map.on('load', function () {
         'id': 'route',
         'type': 'fill',
         'source': 'route',
+        'layout': {},
         'paint': {
             'fill-color': '#06d6a0',
-            'fill-outline-color': '#000',
-            'fill-opacity': 0.3
+            'fill-opacity': [
+                'case',
+                ['boolean', ['feature-state', 'hover'], false],
+                1,
+                0.3
+            ]
         }
+    });
+
+    map.on('mousemove', 'route', function (e) {
+        if (e.features.length > 0) {
+            if (hoveredStateId !== null) {
+                map.setFeatureState(
+                    { source: 'route', id: hoveredStateId },
+                    { hover: false }
+                );
+            }
+            hoveredStateId = e.features[0].id;
+            map.setFeatureState(
+                { source: 'route', id: hoveredStateId },
+                { hover: true }
+            );
+        }
+    });
+
+    map.on('mouseleave', 'route', function () {
+        if (hoveredStateId !== null) {
+            map.setFeatureState(
+                { source: 'route', id: hoveredStateId },
+                { hover: false }
+            );
+        }
+        hoveredStateId = null;
     });
 
     map.addLayer({
